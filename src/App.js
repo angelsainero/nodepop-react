@@ -4,20 +4,22 @@ import Button from "./components/shared/button";
 import LoginPage from "./components/auth/LoginPage";
 import { useState } from "react";
 
-function App() {
-  const [isLogged, setIsLogged] = useState(false);
+function App({isInitiallyLogged}) {
+  const [isLogged, setIsLogged] = useState(isInitiallyLogged);
 
   const handleLogin = () => {
     setIsLogged(true)
   }
 
+  const handleLogout = () => {
+    setIsLogged(false)
+  }
+
   return (
     <div className="App">
-      {isLogged ? <AdvertsPage /> :
+      {isLogged ? <AdvertsPage onLogout={handleLogout}/> :
       <LoginPage onLogin={handleLogin}/>}
-      <Button variant="relleno" onClick={(event) => console.log(event)}>
-        Click me!{" "}
-      </Button>
+      
     </div>
   );
 }

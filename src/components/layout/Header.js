@@ -2,6 +2,7 @@ import Button from "../shared/button";
 import logo, { ReactComponent as Icon } from "../../assets/nodepop.svg";
 import { logout } from "../auth/service";
 
+
 const Header = ({ isLogged, onLogout }) => {
     const handleLogoutClick = async () =>{
         await logout();

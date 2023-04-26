@@ -23,13 +23,13 @@ function App({ isInitiallyLogged }) {
         <Route path="/" element={<Navigate to="adverts" />} />
         <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
         <Route
-          path="/adverts"
-          element={<AdvertsPage onLogout={handleLogout} isLogged={isLogged} />}
+          path="/adverts"          
+          element={isLogged ?<AdvertsPage onLogout={handleLogout} isLogged={isLogged} /> : <Navigate to="/login"/>}
         />
         <Route
           path="/adverts/new"
-          element={
-            <NewAdvertPage onLogout={handleLogout} isLogged={isLogged} />
+          element={isLogged ?
+            <NewAdvertPage onLogout={handleLogout} isLogged={isLogged} /> : <Navigate to="/login"/>
           }
         />
         <Route

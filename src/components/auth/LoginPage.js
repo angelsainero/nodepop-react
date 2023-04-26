@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { login } from "./service";
 import Button from "../shared/button";
+import { useNavigate } from "react-router-dom";
 
 
 function LoginPage({ onLogin }) {
+  const navigate = useNavigate()
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -15,6 +17,7 @@ function LoginPage({ onLogin }) {
 
     //logueado
     onLogin();
+    navigate('/adverts')
   };
 
   const handleChange = (event) => {

@@ -2,6 +2,7 @@ import Button from "../shared/button";
 import { useEffect, useState } from "react";
 import { getLatestAdverts } from "./service";
 import Layout from "../layout/layout";
+import { Link } from "react-router-dom";
 
 const AdvertsPage = (props) => {
   //se inicia el use state con un array vacio
@@ -18,12 +19,14 @@ const AdvertsPage = (props) => {
           <ul>
             {adverts.map((advert) => (
               <li key={advert.id}>
+              <Link to={`/adverts/${advert.id}`}>
                 {advert.name}, {advert.price}, {advert.sale} {advert.tags}
+                </Link>
               </li>
             ))}
           </ul>
         ) : (
-          <Button variant="relleno">Escribe el primer anuncio</Button>
+          <Button as={Link} variant="relleno" to="/adverts/new"> Escribe el primer anuncio </Button>
         )}
       </div>
     </Layout>

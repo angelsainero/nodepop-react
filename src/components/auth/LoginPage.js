@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { login } from "./service";
 import Button from "../shared/button";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 function LoginPage({ onLogin }) {
   const navigate = useNavigate()
+  const location = useLocation()
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -17,7 +18,9 @@ function LoginPage({ onLogin }) {
 
     //logueado
     onLogin();
-    navigate('/adverts')
+    //si no hay location no sigas evaluando y ve a la home, si no hay state igual
+    const to=location.state?.from?.pathname || '/';
+    navigate(to);
   };
 
   const handleChange = (event) => {

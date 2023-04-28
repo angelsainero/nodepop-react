@@ -4,7 +4,7 @@ import { getLatestAdverts } from "./service";
 import Layout from "../layout/layout";
 import { Link } from "react-router-dom";
 
-const AdvertsPage = (props) => {
+const AdvertsPage = () => {
   //creamos estado para validar la carga
   const [isLoading, setIsLoading] = useState(true);
 
@@ -20,7 +20,7 @@ const AdvertsPage = (props) => {
   }, []);
 
   return (
-    <Layout title="Anuncios" {...props}>
+    <Layout title="Anuncios">
       {isLoading ? (
         <div>Loading...</div>
       ) : (

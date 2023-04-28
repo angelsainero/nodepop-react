@@ -2,8 +2,11 @@ import Button from "../shared/button";
 import { ReactComponent as Icon } from "../../assets/nodepop.svg";
 import { logout } from "../auth/service";
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../auth/context";
 
-const Header = ({ isLogged, onLogout }) => {
+const Header = () => {
+  const {isLogged, onLogout} = useAuth();
+
   const handleLogoutClick = async () => {
     await logout();
     onLogout();

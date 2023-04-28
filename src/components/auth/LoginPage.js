@@ -2,15 +2,16 @@ import { useState } from "react";
 import { login } from "./service";
 import Button from "../shared/button";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "./context";
 
-function LoginPage({ onLogin }) {
+
+function LoginPage() {
+ const {onLogin} = useAuth(); 
   const navigate = useNavigate();
   const location = useLocation();
 
   const [isLoading, setIsLoading] = useState(false);
-
   const [error, setError] = useState(null);
-
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",

@@ -3,10 +3,14 @@ import { login } from "./service";
 import Button from "../shared/button";
 import { useLocation, useNavigate } from "react-router-dom";
 
-
 function LoginPage({ onLogin }) {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [error, setError] = useState(null);
+
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -14,13 +18,21 @@ function LoginPage({ onLogin }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await login(credentials);
 
-    //logueado
-    onLogin();
-    //si no hay location no sigas evaluando y ve a la home, si no hay state igual
-    const to=location.state?.from?.pathname || '/';
-    navigate(to);
+    setIsLoading(true);
+    try {
+      await login(credentials);
+      setIsLoading(false);
+      //logueado
+      onLogin();
+      //si no hay location no sigas evaluando y ve a la home, si no hay state igual
+      const to = location.state?.from?.pathname || "/";
+      navigate(to);
+    } catch (error) {
+      console.log(error)
+      setError(error);
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (event) => {
@@ -35,7 +47,8 @@ function LoginPage({ onLogin }) {
     setCredentials({ ...credentials, [event.target.name]: event.target.value });
   };
 
-  const buttonDisabled = !credentials.email || !credentials.password;
+  const buttonDisabled =
+    isLoading || !credentials.email || !credentials.password;
 
   return (
     <div>
@@ -57,6 +70,7 @@ function LoginPage({ onLogin }) {
           Log In
         </Button>
       </form>
+      {error && (<div>{error.message}</div>)}
     </div>
   );
 }

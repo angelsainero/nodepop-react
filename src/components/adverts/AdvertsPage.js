@@ -27,12 +27,13 @@ const AdvertsPage = () => {
         <div className="advertsPage">
           {!!adverts.length ? (
             <ul>
-              {adverts.map((advert) => (
+              {adverts.map((advert) => (               
                 <li key={advert.id}>
-                 
+                 <div>                  
                   <Link to={`/adverts/${advert.id}`}>
                     {advert.name}, {advert.price}, {advert.sale.toString()}, {advert.tags}, {advert.photo}
                   </Link>
+                 </div>
                 </li>
               ))}
             </ul>

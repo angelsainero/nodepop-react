@@ -9,13 +9,18 @@ const handleSubmit = (event) => {
   console.log({name: event.target.name.value,
     sale: event.target.sale.value,
     price: event.target.price.value,
-    tags: event.target.tags.value})
-  createAdvert({
-    name: event.target.name.value,
-    sale: event.target.sale.value,
-    price: event.target.price.value,
-    tags: event.target.tags.value
+    tags: event.target.tags.value,
+    file: event.target.photo.files[0]  
   })
+  const formData = new FormData();
+  formData.append('name', event.target.name.value);
+  formData.append('sale', event.target.sale.value);
+  formData.append('price', event.target.price.value);
+  formData.append('tags', event.target.tags.value);
+  formData.append('photo', event.target.photo.files[0]);
+
+
+  createAdvert(formData)
 }
   
   return (
@@ -47,7 +52,7 @@ const handleSubmit = (event) => {
         </div>
         <div>
           <label>Foto</label>
-          <input type="file"></input>
+          <input type="file" name="photo"></input>
         </div>
 
         <Button type="submit" variant="relleno">

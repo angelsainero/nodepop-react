@@ -11,8 +11,8 @@ export const getAdvert = (id) => {
   return client.get(url)
 };
 
-export const createAdvert =  (advert) => {
+export const createAdvert =  (formData) => {
  const url = advertsURL
- return client.post(url, advert);
+ return client.post(url, formData);
 };
 

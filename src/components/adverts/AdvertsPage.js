@@ -29,9 +29,10 @@ const AdvertsPage = () => {
             <ul>
               {adverts.map((advert) => (               
                 <li key={advert.id}>
-                 <div>                  
+                 <div>  
+                  <img src={advert.photo} height="30px" wheight="30px"></img>                
                   <Link to={`/adverts/${advert.id}`}>
-                    {advert.name}, {advert.price}, {advert.sale.toString()}, {advert.tags}, {advert.photo}
+                    Producto: {advert.name}, Precio: {advert.price}, Venta: {advert.sale.toString()}, Categoría: {advert.tags}
                   </Link>
                  </div>
                 </li>

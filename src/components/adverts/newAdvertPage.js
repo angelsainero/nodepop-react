@@ -1,34 +1,57 @@
-import { Button } from "style-components";
+import { useState } from "react";
 import Layout from "../layout/layout";
+import Button from "../shared/button";
 import { createAdvert } from "./service";
-
+import { useNavigate } from "react-router-dom";
 
 const NewAdvertPage = () => {
-const handleSubmit = (event) => {
-  event.preventDefault()
-  console.log({name: event.target.name.value,
-    sale: event.target.sale.value,
-    price: event.target.price.value,
-    tags: event.target.tags.value,
-    file: event.target.photo.files[0]  
-  })
-  const formData = new FormData();
-  formData.append('name', event.target.name.value);
-  formData.append('sale', event.target.sale.value);
-  formData.append('price', event.target.price.value);
-  formData.append('tags', event.target.tags.value);
-  formData.append('photo', event.target.photo.files[0]);
+  const navigate = useNavigate()
+  const [content, setContent] = useState({
+    name: "",
+    price: "",
+  });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setContent((prevContent) => ({
+      ...prevContent,
+      [name]: value,
+    }));
+  };
+  const isDisabled = !(content.name && content.price);
 
+  const handleSubmit = async event => {
+    event.preventDefault();
+    console.log({
+      name: event.target.name.value,
+      sale: event.target.sale.value,
+      price: event.target.price.value,
+      tags: event.target.tags.value,
+      file: event.target.photo.files[0],
+    });
+    const formData = new FormData();
+    formData.append("name", event.target.name.value);
+    formData.append("sale", event.target.sale.value);
+    formData.append("price", event.target.price.value);
+    formData.append("tags", event.target.tags.value);
+    formData.append("photo", event.target.photo.files[0]);
 
-  createAdvert(formData)
-}
-  
+    const advert = await createAdvert(formData);
+
+    navigate(`/adverts/${advert.id}`)
+    
+  };
+
   return (
     <Layout title="Sube tu anuncio">
       <form onSubmit={handleSubmit}>
         <div>
           <label>Nombre</label>
-          <input name="name"></input>
+          <input
+            name="name"
+            value={content.name}
+            required
+            onChange={handleChange}
+          ></input>
         </div>
         <div>
           <label>Tipo</label>
@@ -38,12 +61,18 @@ const handleSubmit = (event) => {
           </select>
         </div>
         <div>
-          <label >Precio</label>
-          <input name="price" type="text" ></input>
+          <label>Precio</label>
+          <input
+            name="price"
+            value={content.price}
+            type="text"
+            required
+            onChange={handleChange}
+          ></input>
         </div>
         <div>
           <label>Tags</label>
-          <select name="tags" >
+          <select name="tags">
             <option>Lifestyle</option>
             <option>motor</option>
             <option>mobile</option>
@@ -55,7 +84,7 @@ const handleSubmit = (event) => {
           <input type="file" name="photo"></input>
         </div>
 
-        <Button type="submit" variant="relleno">
+        <Button type="submit" variant="relleno" disabled={isDisabled}>
           Enviar
         </Button>
       </form>

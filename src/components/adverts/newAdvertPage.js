@@ -5,7 +5,8 @@ import { createAdvert } from "./service";
 import { useNavigate } from "react-router-dom";
 
 const NewAdvertPage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState({
     name: "",
     price: "",
@@ -17,28 +18,33 @@ const NewAdvertPage = () => {
       [name]: value,
     }));
   };
-  const isDisabled = !(content.name && content.price);
+  const isDisabled = isLoading || !(content.name && content.price);
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log({
-      name: event.target.name.value,
-      sale: event.target.sale.value,
-      price: event.target.price.value,
-      tags: event.target.tags.value,
-      file: event.target.photo.files[0],
-    });
-    const formData = new FormData();
-    formData.append("name", event.target.name.value);
-    formData.append("sale", event.target.sale.value);
-    formData.append("price", event.target.price.value);
-    formData.append("tags", event.target.tags.value);
-    formData.append("photo", event.target.photo.files[0]);
-
-    const advert = await createAdvert(formData);
-
-    navigate(`/adverts/${advert.id}`)
-    
+    try {
+      setIsLoading(true);
+      console.log({
+        name: event.target.name.value,
+        sale: event.target.sale.value,
+        price: event.target.price.value,
+        tags: event.target.tags.value,
+        file: event.target.photo.files[0],
+      });
+      const formData = new FormData();
+      formData.append("name", event.target.name.value);
+      formData.append("sale", event.target.sale.value);
+      formData.append("price", event.target.price.value);
+      formData.append("tags", event.target.tags.value);
+      formData.append("photo", event.target.photo.files[0]);
+      const advert = await createAdvert(formData);
+      setIsLoading(false);
+      navigate(`/adverts/${advert.id}`);
+    } catch (error) {
+      if (error.status === 401) {
+        navigate("/login");
+      }
+    }
   };
 
   return (

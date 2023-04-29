@@ -13,6 +13,6 @@ export const getAdvert = (id) => {
 
 export const createAdvert =  (formData) => {
  const url = advertsURL
- return client.post(url, formData);
+ return client.post(url, formData, {});
 };
 

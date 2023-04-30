@@ -14,15 +14,19 @@ function LoginPage() {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
-        
   });
-  console.log(credentials)
-  const handleSubmit = async (event) => {
+  const [isChecked, setIsChecked] = useState(false);
+  const handleOnChange = () => {
+    setIsChecked(!isChecked);
+    
+  }
+  const handleSubmit = async (event, isChecked) => {
     event.preventDefault();
 
     setIsLoading(true);
     try {
-      await login(credentials);
+      await login(credentials, isChecked);
+      console.log(login())
       setIsLoading(false);
       //logueado
       onLogin();
@@ -73,11 +77,10 @@ function LoginPage() {
         <br></br>
         <label>
           Mantener sesión
-          <input
-            name="check"
-            type="checkbox"
-            onChange={handleChange}
-            value={credentials.check}
+          <input name="check" 
+          type="checkbox"
+          checked={isChecked}
+          onChange={handleOnChange}
           ></input>
         </label>
       </form>

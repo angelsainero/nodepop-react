@@ -4,9 +4,8 @@ import Button from "../shared/button";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./context";
 
-
 function LoginPage() {
- const {onLogin} = useAuth(); 
+  const { onLogin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -15,8 +14,9 @@ function LoginPage() {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
+        
   });
-
+  console.log(credentials)
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -30,7 +30,7 @@ function LoginPage() {
       const to = location.state?.from?.pathname || "/";
       navigate(to);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setError(error);
       setIsLoading(false);
     }
@@ -70,8 +70,18 @@ function LoginPage() {
         <Button type="submit" variant="relleno" disabled={buttonDisabled}>
           Log In
         </Button>
+        <br></br>
+        <label>
+          Mantener sesión
+          <input
+            name="check"
+            type="checkbox"
+            onChange={handleChange}
+            value={credentials.check}
+          ></input>
+        </label>
       </form>
-      {error && (<div>{error.message}</div>)}
+      {error && <div>{error.message}</div>}
     </div>
   );
 }

@@ -17,10 +17,15 @@ const AdvertPage = () => {
   if (error?.status === 404) {
     return <Navigate to="/404" />;
   }
+ 
+
   return (
     <Layout title="Detalle de Anuncio">
-      {/* tener en cuenta el primero render {advert && clase 5 2:43:00} */}
-      <div>{JSON.stringify(advert)}</div>
+      {advert && <div>{advert.name}</div>}
+      {advert && <img src={advert.photo}></img>}
+      {advert && <div>Precio: {advert.price} euros</div>}
+      <br></br>
+      
     </Layout>
   );
 };

@@ -15,8 +15,8 @@ function LoginPage() {
     email: "",
     password: "",
   });
- 
-  const [keepSession, setKeepSession] = useState(false)
+
+  const [keepSession, setKeepSession] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,7 +24,7 @@ function LoginPage() {
     setIsLoading(true);
     try {
       await login(credentials, keepSession);
-      
+
       setIsLoading(false);
       //logueado
       onLogin();
@@ -50,9 +50,8 @@ function LoginPage() {
     setCredentials({ ...credentials, [event.target.name]: event.target.value });
   };
   const handleKeepSessionChange = (event) => {
-    setKeepSession(event.target.checked); // 
+    setKeepSession(event.target.checked); //
   };
-
 
   const buttonDisabled =
     isLoading || !credentials.email || !credentials.password;
@@ -61,29 +60,42 @@ function LoginPage() {
     <div>
       <h1>Log in</h1>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="email"
-          onChange={handleChange}
-          value={credentials.email}
-        />
-        <input
-          type="password"
-          name="password"
-          onChange={handleChange}
-          value={credentials.password}
-        />
+        <div>
+          <label>
+            Email
+            <input
+              type="text"
+              name="email"
+              onChange={handleChange}
+              value={credentials.email}
+            ></input>
+          </label>
+        </div>
+        <div>
+          <div>
+            <label>
+              {" "}
+              Password
+              <input
+                type="password"
+                name="password"
+                onChange={handleChange}
+                value={credentials.password}
+              />
+            </label>
+          </div>
+        </div>
         <Button type="submit" variant="relleno" disabled={buttonDisabled}>
           Log In
         </Button>
         <br></br>
         <label>
           Mantener sesión
-          <input name="check" 
-          type="checkbox"
-          onChange={handleKeepSessionChange}
+          <input
+            name="check"
+            type="checkbox"
+            onChange={handleKeepSessionChange}
             checked={keepSession}
-          
           ></input>
         </label>
       </form>

@@ -4,6 +4,8 @@ import Button from "../shared/button";
 import { createAdvert } from "./service";
 import { useNavigate } from "react-router-dom";
 
+import "./newAdvertPage.css";
+
 const NewAdvertPage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -49,51 +51,53 @@ const NewAdvertPage = () => {
 
   return (
     <Layout title="Sube tu anuncio">
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nombre</label>
-          <input
-            name="name"
-            value={content.name}
-            required
-            onChange={handleChange}
-          ></input>
-        </div>
-        <div>
-          <label>Tipo</label>
-          <select name="sale">
-            <option>Sale</option>
-            <option>compra</option>
-          </select>
-        </div>
-        <div>
-          <label>Precio</label>
-          <input
-            name="price"
-            value={content.price}
-            type="text"
-            required
-            onChange={handleChange}
-          ></input>
-        </div>
-        <div>
-          <label>Tags</label>
-          <select name="tags">
-            <option>Lifestyle</option>
-            <option>motor</option>
-            <option>mobile</option>
-            <option>work</option>
-          </select>
-        </div>
-        <div>
-          <label>Foto</label>
-          <input type="file" name="photo"></input>
-        </div>
+        <form onSubmit={handleSubmit}>
+      <div className="newAdvertPage">
+          <div>
+            <label>Nombre</label>
+            <input
+              name="name"
+              value={content.name}
+              required
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div>
+            <label>Tipo</label>
+            <select name="sale">
+              <option>Sale</option>
+              <option>compra</option>
+            </select>
+          </div>
+          <div>
+            <label>Precio</label>
+            <input
+              name="price"
+              value={content.price}
+              type="text"
+              required
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div>
+            <label>Tags</label>
+            <select name="tags">
+              <option>Lifestyle</option>
+              <option>motor</option>
+              <option>mobile</option>
+              <option>work</option>
+            </select>
+          </div>
+          <div>
+            <label>Foto</label>
+            <input type="file" name="photo"></input>
+          </div>
 
-        <Button type="submit" variant="relleno" disabled={isDisabled}>
-          Enviar
-        </Button>
-      </form>
+          <Button type="submit" variant="relleno" disabled={isDisabled}>
+            Enviar
+          </Button>
+      </div>
+        </form>
     </Layout>
   );
 };
